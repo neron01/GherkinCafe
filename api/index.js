@@ -29,6 +29,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// var router = express.Router();
 // Import API Routes
 app.use(require('./routes/users'));
 app.use(require('./routes/reports'));
@@ -40,6 +41,11 @@ require('./auth_config')(passport);
 // Set up DB
 mongoose.connect(config.dbURL, config.dbOptions);
 mongoose.Promise = global.Promise;
+
+// app.use('/api/', router);
+//
+// app.listen(config.port,
+//     () => console.log(`Server start on port ${config.port} ...`));
 
 // Export the server middleware
 module.exports = {

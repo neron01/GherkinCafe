@@ -44,8 +44,12 @@
 <script>
     import ReportsService from '~/services/ReportsService';
     import DateUtils from '~/services/DateUtils';
+    import VueApexcharts from '~/components/ApexCharts.vue'
 
     export default {
+        components: {
+            VueApexcharts
+        },
         data () {
             return {
                 showLine: false,

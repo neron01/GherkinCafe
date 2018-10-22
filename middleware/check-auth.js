@@ -8,6 +8,7 @@ export default async (ctx) => {
             } else {
                 ctx.store.commit('auth/SET_USER', null);
             }
-        });
+        },
+        (error) => { console.log(error); });
     }
 };

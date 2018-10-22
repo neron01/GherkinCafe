@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   /*
   ** Headers of the page
@@ -12,7 +13,10 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
-    ]
+    ],
+      script: [
+          { src: 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.0.0/polyfill.min.js' }
+      ]
   },
   /*
   ** Global CSS
@@ -21,17 +25,20 @@ module.exports = {
     '~/assets/css/main.css',
     '~/assets/css/app.styl'
   ],
-  /*
-  ** Add axios globally
-  */
+    // modules: [
+    //     'nuxt-babel',
+    // ],
   build: {
-    vendor: [
-      'axios',
-      'vuetify',
-    ],
-    /*
-    ** Run ESLINT on save
-    */
+    // analyze: {
+    //   analyzerMode: 'server',
+    //   analyzerHost: '127.0.0.1',
+    //   analyzerPort: '9999',
+    //   openAnalyzer: false
+    // },
+    //   vendor: [
+    //       'babel-polyfill'
+    //   ],
+    extractCSS: true,
     extend (config, ctx) {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
@@ -51,35 +58,30 @@ module.exports = {
           }
         ]
       });
+        config.module.rules.push({
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/,
+            options: {
+                presets: [
+                    ["@babel/env",
+                        {
+                            "targets": { "ie": 11 },
+                            "useBuiltIns": "entry",
+                            "spec":  true
+                        }
+                    ]
+                ],
+                plugins: [
+                    '@babel/plugin-proposal-object-rest-spread',
+                    '@babel/plugin-syntax-dynamic-import',
+                    '@babel/plugin-transform-arrow-functions',
+                    '@babel/plugin-transform-runtime',
+                    'transform-es2015-arrow-functions',
+                ]
+            }
+        });
     },
-    // postcss: {
-    //   preset: {
-    //     // https://cssdb.org/#staging-process
-    //     stage: 2
-    //   }
-    // }
-    //   parser: [require('postcss')],
-    //   postcss: [
-    //       require('postcss-nested')(),
-    //       require('postcss-responsive-type')(),
-    //       require('postcss-hexrgba')(),
-    //   ],
-    //   extractCSS: true,
-      // postcss: {
-      //     plugins: {
-      //         'postcss-preset-env': {
-      //             features: {
-      //                 customProperties: false
-      //             }
-      //         },
-      //
-      //         // Add some plugins
-      //         'postcss-nested': {},
-      //         'postcss-mixins': {},
-      //         'postcss-responsive-type': {},
-      //         'postcss-hexrgba': {}
-      //     }
-      // },
   },
   router: {
     middleware: [
@@ -94,5 +96,5 @@ module.exports = {
   /*
  ** Load Vuetify into the app
  */
-  plugins: ['~/plugins/vuetify.js', { src: '~plugins/vue-apexcharts.js', ssr: false }]
+  plugins: ['~/plugins/vuetify.js' ]
 };
