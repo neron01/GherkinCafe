@@ -1,5 +1,7 @@
-const path = require('path');
+import https from "https";
+
 module.exports = {
+  srcDir: 'src',
   /*
   ** Headers of the page
   */
@@ -14,9 +16,9 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ],
-      script: [
-          { src: 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.0.0/polyfill.min.js' }
-      ]
+    script: [
+        { src: 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.0.0/polyfill.min.js' }
+    ]
   },
   /*
   ** Global CSS
@@ -25,9 +27,20 @@ module.exports = {
     '~/assets/css/main.css',
     '~/assets/css/app.styl'
   ],
-    // modules: [
-    //     'nuxt-babel',
-    // ],
+  modules: [
+    "nuxt-typescript",
+    '@nuxtjs/axios'
+  ],
+    axios: {
+        // See https://github.com/nuxt-community/axios-module#options
+        baseURL: `http://${process.env.HOST || 'localhost'}:${process.env.PORT || 3000}`,
+        httpsAgent: new https.Agent({
+            rejectUnauthorized: false
+        })
+    },
+    // typescript: {
+    //     formatter: "default"
+    // },
   build: {
     // analyze: {
     //   analyzerMode: 'server',
@@ -35,18 +48,15 @@ module.exports = {
     //   analyzerPort: '9999',
     //   openAnalyzer: false
     // },
-    //   vendor: [
-    //       'babel-polyfill'
-    //   ],
     extractCSS: true,
     extend (config, ctx) {
       if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        });
+        // config.module.rules.push({
+        //   enforce: 'pre',
+        //   test: /\.(js|vue)$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /(node_modules)/
+        // });
       }
       config.module.rules.push({
         test: /\.postcss$/,
@@ -58,34 +68,11 @@ module.exports = {
           }
         ]
       });
-        config.module.rules.push({
-            test: /\.js$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/,
-            options: {
-                presets: [
-                    ["@babel/env",
-                        {
-                            "targets": { "ie": 11 },
-                            "useBuiltIns": "entry",
-                            "spec":  true
-                        }
-                    ]
-                ],
-                plugins: [
-                    '@babel/plugin-proposal-object-rest-spread',
-                    '@babel/plugin-syntax-dynamic-import',
-                    '@babel/plugin-transform-arrow-functions',
-                    '@babel/plugin-transform-runtime',
-                    'transform-es2015-arrow-functions',
-                ]
-            }
-        });
     },
   },
   router: {
     middleware: [
-      'fwdcookies',
+      // 'fwdcookies',
       'check-auth'
     ]
   },
@@ -96,5 +83,5 @@ module.exports = {
   /*
  ** Load Vuetify into the app
  */
-  plugins: ['~/plugins/vuetify.js' ]
+  plugins: ['~/plugins/vuetify.js', { src: '~plugins/vue-apexcharts.js', ssr: false }, '~/plugins/axios' ]
 };
