@@ -49,30 +49,21 @@ module.exports = {
     //   openAnalyzer: false
     // },
     extractCSS: true,
-    extend (config, ctx) {
-      if (ctx.isDev && ctx.isClient) {
-        // config.module.rules.push({
-        //   enforce: 'pre',
-        //   test: /\.(js|vue)$/,
-        //   loader: 'eslint-loader',
-        //   exclude: /(node_modules)/
-        // });
-      }
-      config.module.rules.push({
-        test: /\.postcss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader'
-          }
-        ]
-      });
+    extend (config) {
+        config.module.rules.push({
+            test: /\.postcss$/,
+            use: [
+                'vue-style-loader',
+                'css-loader',
+                {
+                    loader: 'postcss-loader'
+                }
+            ]
+        });
     },
   },
   router: {
     middleware: [
-      // 'fwdcookies',
       'check-auth'
     ]
   },

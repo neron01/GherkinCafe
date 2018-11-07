@@ -1,33 +1,37 @@
 import { Component, Vue } from 'nuxt-property-decorator';
+import { State } from 'vuex-class';
+import { IReportState } from '~/store/report/types';
 
 @Component
 export default class extends Vue {
+    @State('report')
+    public reportState!: IReportState;
+
     public pagination: any = {
         rowsPerPage: 10,
     };
-    public test: {startTime: string} = {startTime: ''};
 
-    public async asyncData ({ params, $axios }: any) {
+    public headers = [
+        {
+            align: 'left',
+            text: 'Test name',
+            value: 'name',
+        },
+        { text: 'Status', value: 'status' },
+    ];
 
-        const test: any[] = await $axios.$get('/api/reports/' + params.id + '?tests=true');
-        const headers = [
-            {
-                align: 'left',
-                text: 'Test name',
-                value: 'name',
-            },
-            { text: 'Status', value: 'status' },
-        ];
-        // data.tests = data.tests.concat(data.tests).concat(data.tests );
-        return { test, headers };
+    public async fetch({ store, params }: any) {
+        if (store.state.report.selectedReport === undefined || store.state.report.selectedReport._id !== params.id) {
+            await store.dispatch('report/loadSelectedReport', params.id);
+        }
     }
-    public head () {
+    public head() {
         return {
-            title: `Report: ${this.test.startTime}`,
+            title: `Report: ${this.reportState.selectedReport ? this.reportState.selectedReport.startTime : ''}`,
         };
     }
 
-    public pages () {
+    public pages() {
         if (this.pagination.rowsPerPage == null || this.pagination.totalItems == null) {
             return 0;
         }

@@ -2,9 +2,9 @@ import LoginForm from '~/components/LoginForm.vue';
 
 export default {
     components: {
-        LoginForm
+        LoginForm,
     },
-    data () {
+    data() {
         return {
             drawer: null,
             items: [
@@ -13,7 +13,7 @@ export default {
                 { icon: 'ballot', title: 'Gitlab', to: '/gitlab' },
                 { icon: 'person', title: 'Users', to: '/users', isAuth: true },
             ],
-            title: 'Gherkin cafe'
+            title: 'Gherkin cafe',
         };
     },
 };

@@ -6,7 +6,8 @@ const namespace: string = 'auth';
 
 @Component
 export default class LoginForm extends Vue {
-    @State('auth') public auth!: IUserState;
+    @State('auth')
+    public auth!: IUserState;
 
     @Action('login', { namespace })
     public login: any;
@@ -22,29 +23,29 @@ export default class LoginForm extends Vue {
         email: '',
         error: null,
         password: '',
-        passwordAgain: ''
+        passwordAgain: '',
     };
     public modalShown = false;
     public mode = {
         passwordRecovery: false,
-        register: false
+        register: false,
     };
 
-    public reset () {
+    public reset() {
         this.form = {
             currentPassword: '', // For change password form,
             email: '',
             error: null,
             password: '',
-            passwordAgain: ''
+            passwordAgain: '',
         };
         this.modalShown = false;
         this.mode = {
             passwordRecovery: false,
-            register: false
+            register: false,
         };
     }
-    public async authSubmit () {
+    public async authSubmit() {
         try {
             if (this.mode.register && this.form.password !== this.form.passwordAgain) {
                 throw Error('Passwords should match');
@@ -52,12 +53,12 @@ export default class LoginForm extends Vue {
             if (this.mode.register) {
                 this.register({
                     email: this.form.email,
-                    password: this.form.password
+                    password: this.form.password,
                 });
             } else {
                 this.login({
                     email: this.form.email,
-                    password: this.form.password
+                    password: this.form.password,
                 });
             }
             this.reset();
@@ -65,7 +66,7 @@ export default class LoginForm extends Vue {
             this.form.error = e.message;
         }
     }
-    public async logout () {
+    public async logout() {
         try {
             await this.$store.dispatch('auth/logout');
             this.reset();
@@ -73,7 +74,7 @@ export default class LoginForm extends Vue {
             this.form.error = e.message;
         }
     }
-    public async changePass () {
+    public async changePass() {
         if (!this.mode.passwordRecovery) {
             this.mode.passwordRecovery = true;
             return;
@@ -84,12 +85,11 @@ export default class LoginForm extends Vue {
             }
             await this.changePassword({
                 currentPassword: this.form.currentPassword,
-                newPassword: this.form.password
+                newPassword: this.form.password,
             });
             this.reset();
         } catch (e) {
             this.form.error = e.message;
         }
     }
-
 }

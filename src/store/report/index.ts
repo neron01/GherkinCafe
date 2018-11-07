@@ -3,15 +3,15 @@ import { IRootState } from '../types';
 // import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
-import { IUserState } from './types';
+import { IReportState } from './types';
 
-export const state: IUserState = {
-    authUser: undefined,
+export const state: IReportState = {
+    reports: [],
 };
 
 const namespaced: boolean = true;
 
-export const auth: Module<IUserState, IRootState> = {
+export const report: Module<IReportState, IRootState> = {
     // getters,
     actions,
     mutations,

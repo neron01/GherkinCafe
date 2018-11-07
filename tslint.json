@@ -1,6 +1,6 @@
 {
   "defaultSeverity": "warning",
-  "extends": ["tslint:latest"],
+  "extends": ["tslint-config-airbnb", "tslint:latest"],
   "rules": {
     "max-line-length": {
       "options": [120]
@@ -14,12 +14,18 @@
         "single"
       ]
     },
+    "import-name": false,
+    "no-increment-decrement": false,
+    "prefer-template": false,
+    "indent": [true, "spaces", 4],
+    "ter-indent": [true, 4, { "SwitchCase": 1 } ],
     "trailing-comma": [true, {"multiline": "ignore", "singleline": "never"}],
-    "space-before-function-paren": true,
+    "space-before-function-paren": false,
     "no-conditional-assignment": true,
     "no-consecutive-blank-lines": false,
     "no-unused-expression": [true, "allow-fast-null-checks"],
-    "object-literal-sort-keys": [true],
+    "object-literal-sort-keys": [true, "shorthand-first"],
+    "object-shorthand-properties-first": false,
     "ordered-imports": true,
     "no-submodule-imports": [true, "@", "~", "~src"],
     "no-implicit-dependencies":  [true, ["@", "~", "~src"]],

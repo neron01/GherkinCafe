@@ -2,39 +2,43 @@ import { INuxtActionTree, IRootState } from '../types';
 import { IUser, IUserState } from './types';
 
 export const actions: INuxtActionTree<IUserState, IRootState> = {
-    async login ({ commit }, { email, password }: {email: string, password: string}) {
+    async login({ commit }, { email, password }: { email: string; password: string }) {
         if (!email || !password) {
             throw new Error('Email and password are required');
         }
         try {
             const data: IUser = await this.$axios.$post('/api/auth/login', { email, password }); // TODO почини после
-            commit('SET_USER', data);
+            commit('setUser', data);
         } catch (error) {
             throw new Error('Wrong email or password');
         }
     },
-    async register ({ commit }, { email, password }) {
+    async register({ commit }, { email, password }) {
         if (!email || !password) {
             throw new Error('Email and password are required');
         }
         try {
             const data = await this.$axios.$post('/api/auth/register', { email, password });
-            commit('SET_USER', data);
+            commit('setUser', data);
         } catch (error) {
             switch (error.response.status || 500) {
-                case 409: throw new Error('Such email is already registered');
-                case 500: throw new Error('Internal server error');
+                case 409:
+                    throw new Error('Such email is already registered');
+                case 500:
+                    throw new Error('Internal server error');
             }
         }
     },
-    async logout ({ commit }) {
+    async logout({ commit }) {
         const data = await this.$axios.$post('/api/auth/logout');
         if (data.ok) {
-            commit('SET_USER', null);
+            commit('setUser', null);
         }
     },
-    async changePassword ({ commit },
-                          { currentPassword, newPassword }: { currentPassword: string, newPassword: string }) {
+    async changePassword(
+        { commit },
+        { currentPassword, newPassword }: { currentPassword: string; newPassword: string },
+    ) {
         if (!currentPassword || !newPassword) {
             throw new Error('All fields are required');
         }
@@ -43,5 +47,5 @@ export const actions: INuxtActionTree<IUserState, IRootState> = {
         } catch (error) {
             throw new Error('Wrong password');
         }
-    }
+    },
 };
