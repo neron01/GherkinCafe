@@ -1,8 +1,14 @@
 import { Component, Vue } from 'nuxt-property-decorator';
 import { State } from 'vuex-class';
-import { IReportState } from '~/store/report/types';
+import BackButton from '~/components/BackButton.vue';
+import { DateUtils } from '~/services/DateUtils';
+import { IReport, IReportState } from '~/store/report/types';
 
-@Component
+@Component({
+    components: {
+        BackButton,
+    }
+})
 export default class extends Vue {
     @State('report')
     public reportState!: IReportState;
@@ -19,6 +25,13 @@ export default class extends Vue {
         },
         { text: 'Status', value: 'status' },
     ];
+
+    public execTime(report: IReport): string {
+        return DateUtils.beautyTimes(report.startTime, report.endTime);
+    }
+    public formatDate(date: string): string {
+        return DateUtils.formatFull(date);
+    }
 
     public async fetch({ store, params }: any) {
         if (store.state.report.selectedReport === undefined || store.state.report.selectedReport._id !== params.id) {

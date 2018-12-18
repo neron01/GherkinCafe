@@ -1,8 +1,8 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
-            <v-flex xs12 md8 class="border-right">
-                <v-layout row wrap>
+            <v-flex xs12 md8>
+                <v-layout row wrap class="chart-back">
                     <v-flex sm8 xs12>
                         <no-ssr>
                             <vue-apexcharts type="line" :options="optionsLine" :series="seriesLine"></vue-apexcharts>
@@ -24,9 +24,11 @@
                 </v-layout>
             </v-flex>
             <v-flex xs12 md4>
-                <no-ssr>
-                    <vue-apexcharts type="donut" :options="optionsDonut" :series="seriesDonut"></vue-apexcharts>
-                </no-ssr>
+                <v-layout class="chart-back">
+                    <no-ssr>
+                        <vue-apexcharts type="donut" :options="optionsDonut" :series="seriesDonut" style="width: 100%;"></vue-apexcharts>
+                    </no-ssr>
+                </v-layout>
             </v-flex>
 
             <!-- <my-line v-if="showLine" :data="lineData" :options="options"></my-line> -->
@@ -40,6 +42,11 @@
 .color-box {
     width: 25px;
     height: 25px;
+}
+.chart-back {
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    background-color: white;
+    margin: 0 10px !important;
 }
 .skipped {
     background-color: #f1c40f;

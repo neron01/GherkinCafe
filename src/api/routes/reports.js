@@ -28,8 +28,9 @@ router.post('/reports', async (req, res) => {
         skipped: req.body.skipped,
         warnings: req.body.warnings,
         hasError: req.body.hasError,
+        tags: req.body.tags,
     });
-    await req.body.fixtures[0].tests.forEach(test => {
+    req.body.fixtures && await req.body.fixtures[0].tests.forEach(test => {
         const testEntry = new Test({
             name: test.name,
             uuid: md5(test.name),

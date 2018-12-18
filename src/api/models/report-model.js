@@ -10,10 +10,12 @@ const ReportSchema = new Schema({
     userAgents: [String],
     passed: Number,
     total: Number,
+    tags: [String],
     skipped: Number,
     warnings: [String],
     hasError: Boolean,
     tests: [],
 });
 
-module.exports = mongoose.model('reports', ReportSchema);
+module.exports = mongoose.model(
+    'reports', ReportSchema);

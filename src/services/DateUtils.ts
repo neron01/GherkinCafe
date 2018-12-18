@@ -27,6 +27,19 @@ export const DateUtils = {
             this.formatDigit(date.getMinutes())
         );
     },
+    beautyTimes(startTime: string, endTime: string): string {
+        const deltaMs = (new Date(endTime).getTime() - new Date(startTime).getTime());
+        return this.beautyTime(deltaMs);
+    },
+    beautyTime(timeMs: number): string {
+        let result = timeMs / 1000;
+        let measure = 'секунд';
+        if (result > 60 * 1000) {
+            result = timeMs / 60;
+            measure = 'минут';
+        }
+        return result + ' ' + measure;
+    },
     workingMinutesBetweenDates(startDate: Date, endDate: Date) {
         // Store minutes worked
         let minutesWorked = 0;
