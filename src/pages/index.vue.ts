@@ -76,17 +76,17 @@ export default class extends Vue {
         const additionalInfoLine = [
             {
                 color: 'passed',
-                subTitle: `${(totalSuccess / totalSum) * 100}% set to Passed`,
+                subTitle: `${DateUtils.formatDigit((totalSuccess / totalSum) * 100)}% set to Passed`,
                 title: `${totalSuccess} Passed`,
             },
             {
                 color: 'error',
-                subTitle: `${(totalFail / totalSum) * 100}% set to Failed`,
+                subTitle: `${DateUtils.formatDigit((totalFail / totalSum) * 100)}% set to Failed`,
                 title: `${totalFail} Failed`,
             },
             {
                 color: 'skipped',
-                subTitle: `${(totalSkipped / totalSum) * 100}% set of new tests`,
+                subTitle: `${DateUtils.formatDigit((totalSkipped / totalSum) * 100)}% set of new tests`,
                 title: `${totalSkipped} new tests`,
             },
         ];

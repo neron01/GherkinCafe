@@ -4,5 +4,5 @@ export interface IUser {
     role: string;
 }
 export interface IUserState {
-    authUser?: IUser;
+    authUser?: IUser | undefined;
 }
