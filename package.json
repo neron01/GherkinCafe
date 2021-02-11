@@ -19,7 +19,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.2",
     "@nuxtjs/axios": "^5.3.3",
-    "apexcharts": "^1.5.5",
+    "apexcharts": "^3.24.0",
     "babel-es6-polyfill": "^1.1.0",
     "babel-preset-vue-app": "^2.0.0",
     "bcryptjs": "^2.4.3",
