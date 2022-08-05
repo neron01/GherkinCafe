@@ -31,7 +31,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "md5": "^2.2.1",
-    "mongoose": "^5.2.6",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.0",
     "nuxt": "^2.0.0",
     "nuxt-babel": "^0.1.2",
